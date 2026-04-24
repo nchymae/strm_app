@@ -17,15 +17,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> register() async {
     setState(() => isLoading = true);
 
-    final result = await AuthService().register(email.text, password.text);
+    final result = await AuthService().register(
+      email.text,
+      password.text,
+    );
 
     setState(() => isLoading = false);
 
     if (result == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Registration successful")),
+      );
+
       Navigator.pop(context);
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(result)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result)),
+      );
     }
   }
 
@@ -46,12 +54,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: [
             TextField(
               controller: email,
-              decoration: const InputDecoration(labelText: "Email"),
+              decoration: const InputDecoration(
+                labelText: "Email",
+              ),
             ),
             TextField(
               controller: password,
               obscureText: true,
-              decoration: const InputDecoration(labelText: "Password"),
+              decoration: const InputDecoration(
+                labelText: "Password",
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
