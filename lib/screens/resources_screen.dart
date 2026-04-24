@@ -14,7 +14,7 @@ class ResourcesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("External Resources"),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(0, 255, 255, 255),
         elevation: 0,
       ),
       extendBodyBehindAppBar: true,
