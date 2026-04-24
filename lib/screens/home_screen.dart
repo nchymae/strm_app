@@ -20,14 +20,12 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-            colors: [color.withOpacity(0.7), color],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+          gradient: const LinearGradient(
+            colors: [Color(0xFFff7eb3), Color(0xFF8B5CF6)],
           ),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.3),
+              color: Colors.purple.withOpacity(0.4),
               blurRadius: 10,
               offset: const Offset(0, 5),
             )
@@ -36,7 +34,9 @@ class HomeScreen extends StatelessWidget {
         child: Row(
           children: [
             Icon(icon, size: 35, color: Colors.white),
+
             const SizedBox(width: 15),
+
             Expanded(
               child: Text(
                 title,
@@ -47,6 +47,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+
             const Icon(Icons.arrow_forward_ios, color: Colors.white)
           ],
         ),
@@ -60,8 +61,8 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: color,
           borderRadius: BorderRadius.circular(20),
+          color: Colors.white.withOpacity(0.08),
         ),
         child: Column(
           children: [
@@ -86,9 +87,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F172A), // dark background
+      extendBodyBehindAppBar: true,
+
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
         title: const Text("STRM Dashboard"),
         actions: [
@@ -105,90 +107,99 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF1E1E2C), Color(0xFF2D2D44)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 100, 16, 16),
+          child: Column(
+            children: [
 
-            // 🔥 HEADER (like "Hello Derek")
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+              // 🔥 HEADER
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFff7eb3), Color(0xFF8B5CF6)],
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    const CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.person, color: Colors.black),
+                    ),
+                    const SizedBox(width: 15),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          "Hello Lordenica👋",
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                        Text(
+                          "Welcome back!",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
-              child: Row(
+
+              const SizedBox(height: 20),
+
+              // 📊 STATS
+              Row(
                 children: [
-                  const CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.person, color: Colors.black),
-                  ),
-                  const SizedBox(width: 15),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        "Hello 👋",
-                        style: TextStyle(color: Colors.white70),
-                      ),
-                      Text(
-                        "Welcome back!",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  )
+                  buildStatCard("Tasks", "Manage", Colors.indigo),
+                  buildStatCard("Sync", "Cloud", Colors.deepPurple),
                 ],
               ),
-            ),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            // 📊 STATS SECTION
-            Row(
-              children: [
-                buildStatCard("Tasks", "Manage", Colors.indigo),
-                buildStatCard("Sync", "Cloud", Colors.deepPurple),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-
-            // 📌 MENU LIST
-            Expanded(
-              child: ListView(
-                children: [
-                  buildMenuCard(
-                    context,
-                    "Manage Tasks",
-                    Icons.task,
-                    Colors.blue,
-                    const TasksScreen(),
-                  ),
-                  buildMenuCard(
-                    context,
-                    "Sync Tasks",
-                    Icons.sync,
-                    Colors.green,
-                    const SyncScreen(),
-                  ),
-                  buildMenuCard(
-                    context,
-                    "External Resources",
-                    Icons.public,
-                    Colors.orange,
-                    const ResourcesScreen(),
-                  ),
-                ],
+              // 📌 MENU
+              Expanded(
+                child: ListView(
+                  children: [
+                    buildMenuCard(
+                      context,
+                      "Manage Tasks",
+                      Icons.task,
+                      Colors.blue,
+                      const TasksScreen(),
+                    ),
+                    buildMenuCard(
+                      context,
+                      "Sync Tasks",
+                      Icons.sync,
+                      Colors.green,
+                      const SyncScreen(),
+                    ),
+                    buildMenuCard(
+                      context,
+                      "External Resources",
+                      Icons.public,
+                      Colors.orange,
+                      const ResourcesScreen(),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

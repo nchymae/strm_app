@@ -62,10 +62,10 @@ class _SyncScreenState extends State<SyncScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F172A),
+      backgroundColor: const Color(0xFF1E1E2C),
       appBar: AppBar(
         title: const Text('Sync Tasks'),
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
       ),
       body: Center(
@@ -77,7 +77,7 @@ class _SyncScreenState extends State<SyncScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
               gradient: const LinearGradient(
-                colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                colors: [Color(0xFFff7eb3), Color(0xFF8B5CF6)],
               ),
               boxShadow: [
                 BoxShadow(
@@ -91,7 +91,6 @@ class _SyncScreenState extends State<SyncScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
 
-                // 🔥 ICON
                 const Icon(
                   Icons.cloud_sync,
                   size: 60,
@@ -100,7 +99,6 @@ class _SyncScreenState extends State<SyncScreen> {
 
                 const SizedBox(height: 20),
 
-                // 🔥 STATUS TEXT
                 Text(
                   status,
                   textAlign: TextAlign.center,
@@ -112,7 +110,6 @@ class _SyncScreenState extends State<SyncScreen> {
 
                 const SizedBox(height: 25),
 
-                // 🔥 BUTTON
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

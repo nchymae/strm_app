@@ -17,9 +17,24 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
 
   Future<void> login() async {
+
     if (email.text.trim().isEmpty || password.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Please enter email and password")),
+      );
+      return;
+    }
+
+    if (!email.text.contains("@")) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Invalid email format")),
+      );
+      return;
+    }
+
+    if (password.text.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Password must be at least 6 characters")),
       );
       return;
     }
@@ -28,15 +43,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final result = await AuthService().login(
-        email.text,
-        password.text,
+        email.text.trim(),
+        password.text.trim(),
       );
 
-      setState(() => isLoading = false);
-
       if (result != null) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(result)));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(result)),
+        );
       } else {
         Navigator.pushReplacement(
           context,
@@ -44,9 +58,11 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login error: $e")),
+      );
+    } finally {
       setState(() => isLoading = false);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Login error: $e")));
     }
   }
 
@@ -57,9 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
         width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            colors: [Color(0xFF1E1E2C), Color(0xFF2D2D44)],
           ),
         ),
         child: Center(
@@ -68,24 +82,27 @@ class _LoginScreenState extends State<LoginScreen> {
               margin: const EdgeInsets.all(20),
               padding: const EdgeInsets.all(25),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.white.withOpacity(0.08),
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Column(
                 children: [
                   const Text(
                     "Welcome Back",
-                    style:
-                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 20),
 
                   TextField(
                     controller: email,
-                    decoration: InputDecoration(
-                      labelText: "Email",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)),
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      hintText: "Email",
+                      hintStyle: TextStyle(color: Colors.white54),
                     ),
                   ),
                   const SizedBox(height: 15),
@@ -93,10 +110,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextField(
                     controller: password,
                     obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)),
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      hintText: "Password",
+                      hintStyle: TextStyle(color: Colors.white54),
                     ),
                   ),
 
@@ -105,14 +122,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
+                      backgroundColor: Colors.purpleAccent,
                     ),
                     onPressed: isLoading ? null : login,
                     child: isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text("Login"),
+                        : const Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
                   ),
 
                   TextButton(
@@ -121,7 +139,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       MaterialPageRoute(
                           builder: (_) => const RegisterScreen()),
                     ),
-                    child: const Text("Create Account"),
+                    child: const Text(
+                      "Create Account",
+                      style: TextStyle(color: Colors.white70),
+                    ),
                   )
                 ],
               ),

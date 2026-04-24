@@ -14,43 +14,30 @@ class ResourcesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("External Resources"),
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
       ),
       extendBodyBehindAppBar: true,
-
       body: Container(
-        width: double.infinity,
-        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF1E1E2C),
-              Color(0xFF2D2D44),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            colors: [Color(0xFF1E1E2C), Color(0xFF2D2D44)],
           ),
         ),
-
         child: FutureBuilder<List<PostModel>>(
           future: loadPosts(),
           builder: (context, snapshot) {
 
-            // 🔄 LOADING
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(color: Colors.white),
               );
             }
 
-            // ❌ ERROR
             if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  "Error loading data",
-                  style: TextStyle(color: Colors.white70),
-                ),
+              return const Center(
+                child: Text("Error loading data",
+                    style: TextStyle(color: Colors.white70)),
               );
             }
 
@@ -72,25 +59,17 @@ class ResourcesScreen extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      // 🔢 ID AVATAR
                       CircleAvatar(
                         backgroundColor: Colors.purpleAccent,
-                        child: Text(
-                          post.id.toString(),
-                          style: const TextStyle(color: Colors.white),
-                        ),
+                        child: Text(post.id.toString(),
+                            style: const TextStyle(color: Colors.white)),
                       ),
-
                       const SizedBox(width: 15),
-
-                      // 📝 TITLE
                       Expanded(
                         child: Text(
                           post.title,
                           style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
+                              color: Colors.white, fontSize: 15),
                         ),
                       ),
                     ],

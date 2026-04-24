@@ -14,7 +14,6 @@ class _TasksScreenState extends State<TasksScreen> {
   final descController = TextEditingController();
 
   Future<void> addTask() async {
-    // ✅ VALIDATION (UNCHANGED)
     if (titleController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Task title is required")),
@@ -60,10 +59,10 @@ class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F172A),
+      backgroundColor: const Color(0xFF1E1E2C),
       appBar: AppBar(
         title: const Text("Offline Tasks"),
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
       ),
       body: Padding(
@@ -71,19 +70,20 @@ class _TasksScreenState extends State<TasksScreen> {
         child: Column(
           children: [
 
-            // 🔥 INPUT CARD
             Container(
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.white.withOpacity(0.08),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
                 children: [
                   TextField(
                     controller: titleController,
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: "Task Title",
+                      labelStyle: const TextStyle(color: Colors.white70),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -93,8 +93,10 @@ class _TasksScreenState extends State<TasksScreen> {
 
                   TextField(
                     controller: descController,
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: "Task Description",
+                      labelStyle: const TextStyle(color: Colors.white70),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -109,7 +111,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       onPressed: addTask,
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.purpleAccent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -123,7 +125,6 @@ class _TasksScreenState extends State<TasksScreen> {
 
             const SizedBox(height: 20),
 
-            // 🔥 TASK LIST
             Expanded(
               child: FutureBuilder<List<Task>>(
                 future: getTasks(),

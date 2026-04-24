@@ -15,7 +15,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isLoading = false;
 
   Future<void> register() async {
-    // ✅ VALIDATION (HINDI BINAGO)
     if (email.text.trim().isEmpty || password.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Please fill in all fields")),
@@ -88,16 +87,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // 👤 ICON
                   const CircleAvatar(
                     radius: 35,
                     backgroundColor: Colors.white24,
                     child: Icon(Icons.person, size: 40, color: Colors.white),
                   ),
-
                   const SizedBox(height: 15),
 
-                  // TITLE
                   const Text(
                     "Create Account",
                     style: TextStyle(
@@ -109,14 +105,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   const SizedBox(height: 25),
 
-                  // 📧 EMAIL
                   TextField(
                     controller: email,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: "Email",
                       hintStyle: const TextStyle(color: Colors.white54),
-                      prefixIcon: const Icon(Icons.email, color: Colors.white70),
+                      prefixIcon:
+                          const Icon(Icons.email, color: Colors.white70),
                       filled: true,
                       fillColor: Colors.white10,
                       border: OutlineInputBorder(
@@ -128,7 +124,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   const SizedBox(height: 15),
 
-                  // 🔒 PASSWORD
                   TextField(
                     controller: password,
                     obscureText: true,
@@ -136,7 +131,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: InputDecoration(
                       hintText: "Password",
                       hintStyle: const TextStyle(color: Colors.white54),
-                      prefixIcon: const Icon(Icons.lock, color: Colors.white70),
+                      prefixIcon:
+                          const Icon(Icons.lock, color: Colors.white70),
                       filled: true,
                       fillColor: Colors.white10,
                       border: OutlineInputBorder(
@@ -148,7 +144,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   const SizedBox(height: 25),
 
-                  // 🚀 REGISTER BUTTON
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -169,16 +164,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 strokeWidth: 2,
                               ),
                             )
-                          : const Text(
-                              "Register",
-                              style: TextStyle(fontSize: 16),
-                            ),
+                          : const Text("Register"),
                     ),
                   ),
 
                   const SizedBox(height: 10),
 
-                  // 🔙 LOGIN NAV
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
