@@ -12,33 +12,94 @@ class ResourcesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("External Resources")),
-      body: FutureBuilder<List<PostModel>>(
-        future: loadPosts(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      appBar: AppBar(
+        title: const Text("External Resources"),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      extendBodyBehindAppBar: true,
 
-          final posts = snapshot.data!;
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF1E1E2C),
+              Color(0xFF2D2D44),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
 
-          return ListView.builder(
-            itemCount: posts.length,
-            itemBuilder: (context, index) {
-              final post = posts[index];
+        child: FutureBuilder<List<PostModel>>(
+          future: loadPosts(),
+          builder: (context, snapshot) {
 
-              return Card(
-                margin: const EdgeInsets.all(10),
-                child: ListTile(
-                  title: Text(post.title),
-                  leading: CircleAvatar(
-                    child: Text(post.id.toString()),
-                  ),
+            // 🔄 LOADING
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              );
+            }
+
+            // ❌ ERROR
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  "Error loading data",
+                  style: TextStyle(color: Colors.white70),
                 ),
               );
-            },
-          );
-        },
+            }
+
+            final posts = snapshot.data!;
+
+            return ListView.builder(
+              padding: const EdgeInsets.fromLTRB(15, 100, 15, 20),
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                final post = posts[index];
+
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 15),
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.white24),
+                  ),
+                  child: Row(
+                    children: [
+                      // 🔢 ID AVATAR
+                      CircleAvatar(
+                        backgroundColor: Colors.purpleAccent,
+                        child: Text(
+                          post.id.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+
+                      const SizedBox(width: 15),
+
+                      // 📝 TITLE
+                      Expanded(
+                        child: Text(
+                          post.title,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
